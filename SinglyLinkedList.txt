@@ -1,0 +1,150 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+struct node* head = NULL;
+struct node* tail = NULL;
+void ins_beg(int data)
+{
+    cout<<"Data to be inserted : "<<data<<endl;
+
+    struct node *newt = (struct node*)malloc(sizeof(struct node*));
+    newt->data = data;
+    newt->next = NULL;
+    if (head == NULL)
+    {
+        head = newt;
+        tail = newt;
+    }
+
+    else
+    {
+        newt->next = head;
+        head = newt;
+    }
+}
+
+void ins_last(int data)
+{
+    cout<<"Data to be inserted : "<<data<<endl;
+
+    struct node* newt = (struct node*)malloc(sizeof(struct node*));
+    newt->data = data;
+    newt->next = NULL;
+    if (tail == NULL)
+    {
+        tail = newt;
+        head = newt;
+    }
+    else
+    {
+        tail->next = newt;
+        tail = newt;
+    }
+}
+
+void ins_pos(int pos,int data)
+{
+    cout<<"Data will be inserted at "<<pos<<" position"<<endl;
+    struct node* newt = (struct node*)malloc(sizeof(struct node*));
+    struct node* temp = head;
+
+    for (int i=1;i<pos-1;i++)
+    {
+        temp = temp->next;
+    }
+
+    newt->data = data;
+    newt->next = NULL;
+
+    if (pos==1)
+    {
+        ins_beg(data);
+    }
+    else
+    {
+    newt->next = temp->next;
+    temp->next = newt;
+    }
+
+
+}
+
+void del_beg()
+{
+    struct node* ne = head;
+    if (head==NULL)
+     cout<<"List is already empty"<<endl;
+    else
+    {
+        head = ne->next;
+        free(ne);
+    }
+}
+
+void del_end()
+{
+    struct node* ne = head;
+    struct node* ref=NULL;
+    if (head==NULL)
+    cout<<"List is empty already"<<endl;
+    
+    else {
+    while(ne->next!=NULL)
+    {
+        ref = ne;
+        ne = ne->next;
+    }
+    tail = ref;
+    ref->next = NULL;
+    free(ne);
+    }
+}
+
+void del_mid(int num)
+{
+    struct node* ne = head;
+    struct node* ref = NULL;
+    while(ne->data!=num)
+    {
+        ref = ne;
+        ne = ne ->next;
+    }
+    ref->next = ne->next;
+    free(ne);
+}
+void disp()
+{
+    struct node* temp = head;
+    while (temp != NULL)
+    {
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+}
+
+int search(int num)
+{
+    int ct;
+    struct node* nw = head;
+   
+   
+    while (nw!=NULL&&nw->data!=num)
+    {
+        ct++;
+        nw = nw->next;
+    }
+    return ct;
+}
+
+
+int main()
+{
+   del_end();
+
+    return 0;
+}
